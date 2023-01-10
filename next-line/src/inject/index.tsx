@@ -31,7 +31,7 @@ function Inject() {
     };
   }, []);
 
-  return <div>{text}Inject</div>;
+  return <div>{text}<br />- Loaded from next line</div>;
 }
 window.addEventListener("load", () => {
   console.log("loaded");
@@ -39,6 +39,9 @@ window.addEventListener("load", () => {
   const injectDOM = document.createElement("div");
   injectDOM.className = "inject";
   injectDOM.style.textAlign = "center";
+  injectDOM.style.position = "absolute";
+  injectDOM.style.top = "400px";
+  injectDOM.style.left = "100px";
   document.body.appendChild(injectDOM);
   ReactDOM.render(<Inject />, injectDOM);
   // ReactDOM.render(<Inject />, document.getElementById('inject'));
