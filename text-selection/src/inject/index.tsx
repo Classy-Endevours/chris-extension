@@ -29,7 +29,30 @@ function Inject() {
       {text}
       {textArea}
       {text != "" && (
-        <button style={{ position: "absolute", ...buttonCss }}>Click</button>
+        <SpeedDial
+          ariaLabel="SpeedDial basic example"
+          sx={{ position: "absolute", ...buttonCssTextArea }}
+          icon={<SpeedDialIcon />}
+        >
+          <SpeedDialAction
+            key="Open Website"
+            icon={
+              <IconButton onClick={openWebsite}>
+                <LaunchIcon />
+              </IconButton>
+            }
+            tooltipTitle={"Open Website"}
+          />
+          <SpeedDialAction
+            key="Open Modal"
+            icon={
+              <IconButton onClick={handleOpen}>
+                <WebIcon />
+              </IconButton>
+            }
+            tooltipTitle={"Open Modal"}
+          />
+        </SpeedDial>
       )}
       <SpeedDial
         ariaLabel="SpeedDial basic example"
