@@ -13,17 +13,16 @@ export default function useChange() {
     setTextArea(document.activeElement.value);
   };
   const handleFocusIn = (e) => {
-    // @ts-ignore
-    const tempMeasure = e.path[0].getBoundingClientRect();
-
     if (
       document.activeElement.nodeName == "TEXTAREA" ||
       document.activeElement.nodeName == "INPUT"
     ) {
+      // @ts-ignore
+      const tempMeasure = document.activeElement.getBoundingClientRect();
       setButtonCss({
         display: "block",
-        top: tempMeasure.top + e.path[0].offsetTop,
-        left: tempMeasure.left + e.path[0].offsetWidth,
+        top: `${tempMeasure.top + tempMeasure.height}px`,
+        left: `${tempMeasure.left + tempMeasure.width}px`,
       });
       // @ts-ignore
       document.addEventListener("keypress", handleText);
@@ -31,7 +30,7 @@ export default function useChange() {
   };
 
   const handleFocusOut = () => {
-    setTextArea("");
+    // setTextArea("");
 
     // @ts-ignore
     document.removeEventListener("keypress", handleText);
