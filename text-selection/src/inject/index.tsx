@@ -16,6 +16,7 @@ import Box from "@mui/material/Box";
 // @ts-ignore
 import { ScreenCapture } from "react-screen-capture";
 import ScreenshotIcon from "@mui/icons-material/Screenshot";
+import Waveform from "../components/Waveform";
 
 function Inject() {
   const { text, buttonCss } = useSelection();
@@ -37,6 +38,7 @@ function Inject() {
     <div>
       {text}
       {textArea}
+      <Waveform />
       {text != "" && (
         <SpeedDial
           ariaLabel="SpeedDial basic example"
