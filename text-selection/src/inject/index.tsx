@@ -17,12 +17,14 @@ import Box from "@mui/material/Box";
 import { ScreenCapture } from "react-screen-capture";
 import ScreenshotIcon from "@mui/icons-material/Screenshot";
 import Waveform from "../components/Waveform";
+import "../styles/globals.scss";
+import "../styles/Home.module.scss";
+import VideoSnipping from "../components/VideoSnipping";
 
 function Inject() {
   const { text, buttonCss } = useSelection();
   const { textArea, buttonCssTextArea } = useChange();
   const [screenCaptureState, setScreenCaptureState] = useState<any>("");
-  console.log({ buttonCss });
   const openWebsite = () => {
     window.open("https://whale-app-vsgoj.ondigitalocean.app/", "_blank");
   };
@@ -39,10 +41,11 @@ function Inject() {
       {text}
       {textArea}
       <Waveform />
+      <VideoSnipping />
       {text != "" && (
         <SpeedDial
           ariaLabel="SpeedDial basic example"
-          sx={{ position: "absolute", ...buttonCss }}
+          sx={{ position: "absolute ", ...buttonCss }}
           icon={<SpeedDialIcon />}
           direction="down"
           FabProps={{

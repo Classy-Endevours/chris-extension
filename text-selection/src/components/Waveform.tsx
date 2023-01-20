@@ -105,7 +105,8 @@ const WaveFormContainer = () => {
       <br />
       <div>
       {
-        waveform && Object.values(waveform.regions.list).map((region: any) => {
+        // @ts-ignore
+        waveform && Object.values(waveform.regions.list).map((region: any) =>  {
           return <div key={region.id} >
             <button onClick={() => playRegion(region)}>Play region {region.id}</button>
             <button onClick={() => pauseRegion()}>Pause region {region.id}</button>
@@ -116,7 +117,7 @@ const WaveFormContainer = () => {
         })
       }
       </div>
-    </WaveformContainer>
+    </WaveformContainer> 
   );
 };
 
