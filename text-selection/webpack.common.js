@@ -5,11 +5,12 @@ module.exports = {
     popup: path.join(__dirname, "src/popup/index.tsx"),
     eventPage: path.join(__dirname, "src/eventPage.ts"),
     inject: path.join(__dirname, "src/inject/index.tsx"),
+    ffmpeg: path.join(__dirname, "src/inject/ffmpeg.min.js"),
   },
   output: {
     path: path.join(__dirname, "dist/js"),
     filename: "[name].js",
-    publicPath: '',
+    publicPath: '/',
   },
   module: {
     rules: [

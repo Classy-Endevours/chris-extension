@@ -7,6 +7,18 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     console.log("eventPage notified that Popup.tsx has mounted.");
   }
 
+  if(request.type === 'LOAD_SCRIPT') {
+    chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+      fetch(
+        request.url,
+      )
+      .then(res => res.text())
+      .then(function (result) {
+        chrome.tabs.executeScript({ code: result })
+      })
+    });
+  }
+
   return isResponseAsync;
 });
 

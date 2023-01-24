@@ -1,13 +1,17 @@
 import React, { useState } from "react";
-import { createFFmpeg, fetchFile } from "@ffmpeg/ffmpeg/dist/ffmpeg.min.js";
+import { createFFmpeg, fetchFile } from '@ffmpeg/ffmpeg';
 import * as helpers from "../utils/helpers";
 import VideoFilePicker from "./VideoPicker";
 import OutputVideo from "./OutputVideo";
 import RangeInput from "./RangeInput";
+console.log('VideoSnipping v1')
 
 const FF = createFFmpeg({
+  // mainName: 'main',
+  corePath: 'https://unpkg.com/@ffmpeg/core-st@0.11.1/dist/ffmpeg-core.js',
   // log: true,
-  corePath: "http://127.0.0.1:5500/text-selection/src/inject/ffmpeg-core.js",
+  // // corePath: "https://unpkg.com/@ffmpeg/core@0.10.0/dist/ffmpeg-core.js"
+  // corePath: "http://127.0.0.1:5500/text-selection/src/inject/ffmpeg-core.js",
 });
 
 (async function () {
@@ -15,6 +19,7 @@ const FF = createFFmpeg({
 })();
 
 function VideoSnipping() {
+  console.log('VideoSnipping v1')
   const [inputVideoFile, setInputVideoFile] = useState(null);
   const [trimmedVideoFile, setTrimmedVideoFile] = useState(null);
   // const ref = useRef();

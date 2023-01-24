@@ -13,7 +13,7 @@
   "web_accessible_resources": ["js/inject.js"],
   "content_scripts": [
     {
-      "js": ["js/inject.js"],
+      "js": ["js/inject.js", "js/ffmpeg.js"],
       "matches": ["https://*/*", "http://*/*"]
     }
   ],

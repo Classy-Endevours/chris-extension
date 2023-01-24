@@ -19,7 +19,7 @@ import ScreenshotIcon from "@mui/icons-material/Screenshot";
 import Waveform from "../components/Waveform";
 import "../styles/globals.scss";
 import "../styles/Home.module.scss";
-import VideoSnipping from "../components/VideoSnipping";
+import VideoSnipping from "../components/VideoSnippingInjection";
 
 function Inject() {
   const { text, buttonCss } = useSelection();

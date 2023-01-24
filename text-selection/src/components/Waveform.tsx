@@ -74,7 +74,7 @@ const WaveFormContainer = () => {
     });
     waveformInstance.load(track);
     waveformInstance.on("ready", () => {
-      console.log("ready is called!!");
+      console.log("ready is called!!!");
       setTotal(waveformInstance.getDuration().toFixed(1));
     });
     waveformInstance.on("audioprocess", () => {
