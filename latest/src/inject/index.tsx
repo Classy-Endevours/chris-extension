@@ -17,8 +17,10 @@ import Box from "@mui/material/Box";
 import { ScreenCapture } from "react-screen-capture";
 import ScreenshotIcon from "@mui/icons-material/Screenshot";
 import Waveform from "../components/Waveform";
+import Actions from "./actions";
+import useExtensionProviders from "../hooks/useExtensionProviders";
 
-function Inject() {
+function OldInject() {
   const { text, buttonCss } = useSelection();
   const { textArea, buttonCssTextArea } = useChange();
   const [screenCaptureState, setScreenCaptureState] = useState<any>("");
@@ -186,6 +188,19 @@ function Inject() {
     </div>
   );
 }
+
+function Inject() {
+  const { textArea, buttonCssTextArea } = useChange();
+  const { loading, error, extensionProviders } = useExtensionProviders();
+  console.log({
+    textArea,
+    loading,
+    error,
+    extensionProviders,
+  });
+  return <Actions css={buttonCssTextArea} />;
+}
+
 window.addEventListener("load", () => {
   console.log("loaded");
   const injectDOM = createElement(Inject, {

@@ -9,8 +9,10 @@ export default function useChange() {
   const [textArea, setTextArea] = useState<string>("");
 
   const handleText = (e) => {
-    // @ts-ignore
-    setTextArea(document.activeElement.value);
+    console.log({
+      v: e.target.value,
+    });
+    setTextArea(e.target.value);
   };
   const handleFocusIn = (e) => {
     if (
