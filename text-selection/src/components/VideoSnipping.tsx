@@ -8,7 +8,7 @@ console.log('VideoSnipping v1')
 
 const FF = createFFmpeg({
   // mainName: 'main',
-  corePath: 'https://unpkg.com/@ffmpeg/core-st@0.11.1/dist/ffmpeg-core.js',
+  corePath: chrome.runtime.getURL('vendor/ffmpeg-core.js'),
   // log: true,
   // // corePath: "https://unpkg.com/@ffmpeg/core@0.10.0/dist/ffmpeg-core.js"
   // corePath: "http://127.0.0.1:5500/text-selection/src/inject/ffmpeg-core.js",
