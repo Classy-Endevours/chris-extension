@@ -190,15 +190,20 @@ function OldInject() {
 }
 
 function Inject() {
-  const { textArea, buttonCssTextArea } = useChange();
+  const { text, buttonCss } = useSelection();
   const { loading, error, extensionProviders } = useExtensionProviders();
   console.log({
-    textArea,
+    text,
     loading,
     error,
     extensionProviders,
   });
-  return <Actions css={buttonCssTextArea} />;
+  return (
+    !loading &&
+    !error && (
+      <Actions css={buttonCss} extensionProviders={extensionProviders} />
+    )
+  );
 }
 
 window.addEventListener("load", () => {

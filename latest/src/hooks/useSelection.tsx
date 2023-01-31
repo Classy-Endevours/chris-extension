@@ -3,6 +3,7 @@ import React, { useState } from "react";
 export default function useSelection() {
   const [text, setText] = useState<string>("");
   const [buttonCss, setButtonCss] = useState({
+    display: "none",
     left: "0",
     top: "0",
   });
@@ -11,10 +12,19 @@ export default function useSelection() {
     const textTemp = getSelectedText();
 
     setText(textTemp);
-    if (buttonCss.left == "0") {
+    if (textTemp !== "") {
+      if (buttonCss.left == "0") {
+        setButtonCss({
+          display: "block",
+          left: e.pageX + "px",
+          top: e.pageY + "px",
+        });
+      }
+    } else {
       setButtonCss({
-        left: e.pageX + "px",
-        top: e.pageY + "px",
+        display: "none",
+        left: "0",
+        top: "0",
       });
     }
   };

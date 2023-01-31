@@ -13,7 +13,7 @@ class Backend {
     }
     
     getExtensionProviders(extensionConstantId: string){
-        return this.axios.get(`/extension-const/${extensionConstantId}`)
+        return this.axios.get(`/extension-const/${extensionConstantId}/extension`)
     }
 }
 
