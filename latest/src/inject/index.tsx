@@ -201,7 +201,7 @@ function Inject() {
   return (
     !loading &&
     !error && (
-      <Actions css={buttonCss} extensionProviders={extensionProviders} />
+      <Actions css={buttonCss} extensionProviders={extensionProviders} text={text} />
     )
   );
 }

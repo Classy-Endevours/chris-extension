@@ -11,8 +11,8 @@ export default function useSelection() {
   document.onmouseup = (e) => {
     const textTemp = getSelectedText();
 
-    setText(textTemp);
     if (textTemp !== "") {
+      setText(textTemp);
       if (buttonCss.left == "0") {
         setButtonCss({
           display: "block",
@@ -33,6 +33,8 @@ export default function useSelection() {
       return window.getSelection().toString();
       //   @ts-ignore
     } else if (document?.selection) {
+      //   @ts-ignore
+      console.log({ data: document?.selection.createRange().text });
       //   @ts-ignore
       return document?.selection.createRange().text;
     }
