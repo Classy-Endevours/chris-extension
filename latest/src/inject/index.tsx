@@ -191,62 +191,16 @@ function OldInject() {
 
 function Inject() {
   const { text, buttonCss } = useSelection();
-  const snippingRef = useRef();
   const { loading, error, extensionProviders } = useExtensionProviders();
-  const [screenCaptureState, setScreenCaptureState] = useState<any>("");
-
-  function gotMessage(message, sender, sendResponse) {
-    console.log({ message });
-
-    if (message.snipping === "startSnipping") {
-      // @ts-ignore
-      snippingRef.current.click();
-    }
-
-    // autoChat(message.tme, message.txt, message.rid);
-  }
-  // Listen to messages sent from other parts of the extension.
-  useEffect(() => {
-    chrome.runtime.onMessage.addListener(gotMessage);
-  }, []);
-
-  const handleScreenCapture = (screenCapture: any) => {
-    setScreenCaptureState(screenCapture);
-  };
-  console.log({ screenCaptureState });
 
   return (
     !loading &&
     !error && (
-      <>
-        <Actions
-          css={buttonCss}
-          extensionProviders={extensionProviders}
-          text={text}
-        />
-        {/* @ts-ignore */}
-        <ScreenCapture onEndCapture={handleScreenCapture}>
-          {({ onStartCapture }) => (
-            <IconButton
-              onClick={onStartCapture}
-              size="small"
-              ref={snippingRef}
-              sx={{ display: "none" }}
-            >
-              <ScreenshotIcon fontSize="small" />
-            </IconButton>
-          )}
-        </ScreenCapture>{" "}
-        {screenCaptureState != "" && (
-          <img
-            src={screenCaptureState}
-            alt="react-screen-capture"
-            width="50%"
-            height="50%"
-            style={{ position: "relative" }}
-          />
-        )}
-      </>
+      <Actions
+        css={buttonCss}
+        extensionProviders={extensionProviders}
+        text={text}
+      />
     )
   );
 }

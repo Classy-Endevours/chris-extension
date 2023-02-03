@@ -1,10 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import IconButton from "@mui/material/IconButton";
 import LaunchIcon from "@mui/icons-material/Launch";
 import SpeedDial from "@mui/material/SpeedDial";
 import SpeedDialIcon from "@mui/material/SpeedDialIcon";
 import SpeedDialAction from "@mui/material/SpeedDialAction";
 import Modal from "@mui/material/Modal";
+// @ts-ignore
+import { ScreenCapture } from "react-screen-capture";
+import ScreenshotIcon from "@mui/icons-material/Screenshot";
 import {
   Box,
   Button,
@@ -20,6 +23,7 @@ const style = {
   left: "50%",
   transform: "translate(-50%, -50%)",
   width: 600,
+  height: 400,
   bgcolor: "background.paper",
   border: "2px solid #000",
   boxShadow: 24,
@@ -36,6 +40,29 @@ const Actions = ({ css, extensionProviders, text }) => {
     type: "",
   });
   const [apiResponse, setApiResponse] = useState<any>("");
+  const snippingRef = useRef();
+  const [screenCaptureState, setScreenCaptureState] = useState<any>("");
+
+  function gotMessage(message, sender, sendResponse) {
+    console.log({ message });
+
+    if (message.snipping === "startSnipping") {
+      // @ts-ignore
+      snippingRef.current.click();
+    }
+
+    // autoChat(message.tme, message.txt, message.rid);
+  }
+  // Listen to messages sent from other parts of the extension.
+  useEffect(() => {
+    chrome.runtime.onMessage.addListener(gotMessage);
+  }, []);
+
+  const handleScreenCapture = (screenCapture: any) => {
+    setScreenCaptureState(screenCapture);
+    handleOpen();
+  };
+  console.log({ screenCaptureState });
 
   useEffect(() => {
     setSelectedText(text);
@@ -106,19 +133,19 @@ const Actions = ({ css, extensionProviders, text }) => {
           aria-describedby="modal-modal-description"
         >
           <Box sx={style}>
-            <Typography
-              id="modal-modal-title"
-              variant="h6"
-              component="h2"
-              my={2}
-            >
-              Extension
-            </Typography>
-            <Box display="flex">
-              {extType.type === "text" && (
-                <>
-                  {!textLoader && apiResponse === "" ? (
-                    <>
+            <Box display="flex" flexDirection="column">
+              <Typography
+                id="modal-modal-title"
+                variant="h6"
+                component="h2"
+                mb={2}
+              >
+                Extension
+              </Typography>
+              <Box display="flex" flexDirection="column">
+                {extType.type === "text" ? (
+                  <>
+                    <Box display="flex">
                       <TextField
                         label={extType.selectedObject.json.text}
                         size="small"
@@ -140,20 +167,84 @@ const Actions = ({ css, extensionProviders, text }) => {
                       >
                         Submit
                       </Button>
-                    </>
-                  ) : textLoader ? (
-                    <CircularProgress />
-                  ) : (
-                    <Typography>
-                      {apiResponse[extType.selectedObject.output.text]}
-                    </Typography>
-                  )}
-                </>
-              )}
+                    </Box>
+                    <Box display="flex">
+                      {textLoader ? (
+                        <CircularProgress />
+                      ) : (
+                        <Typography>
+                          {extType.selectedObject.output.text.isArray
+                            ? apiResponse.map(
+                                (item: any) =>
+                                  item[extType.selectedObject.output.text.value]
+                              )
+                            : apiResponse[
+                                extType.selectedObject.output.text.value
+                              ]}
+                        </Typography>
+                      )}
+                    </Box>
+                  </>
+                ) : (
+                  <>
+                    <Box display="flex">
+                      {screenCaptureState !== "" && (
+                        <img
+                          src={screenCaptureState}
+                          alt="react-screen-capture"
+                          width="50%"
+                          style={{ position: "relative" }}
+                        />
+                      )}
+                      <Button
+                        sx={{ ml: 2 }}
+                        onClick={() =>
+                          fetchData({
+                            [extType.selectedObject.json.text]: selectedText,
+                          })
+                        }
+                      >
+                        Submit
+                      </Button>
+                    </Box>
+                    <Box display="flex">
+                      {textLoader ? (
+                        <CircularProgress />
+                      ) : (
+                        <Typography>
+                          {extType.selectedObject.output.image.isArray
+                            ? apiResponse.map(
+                                (item: any) =>
+                                  item[
+                                    extType.selectedObject.output.image.value
+                                  ]
+                              )
+                            : apiResponse[
+                                extType.selectedObject.output.image.value
+                              ]}
+                        </Typography>
+                      )}
+                    </Box>
+                  </>
+                )}
+              </Box>
             </Box>
           </Box>
         </Modal>
       )}
+      {/* @ts-ignore */}
+      <ScreenCapture onEndCapture={handleScreenCapture}>
+        {({ onStartCapture }) => (
+          <IconButton
+            onClick={onStartCapture}
+            size="small"
+            ref={snippingRef}
+            sx={{ display: "none" }}
+          >
+            <ScreenshotIcon fontSize="small" />
+          </IconButton>
+        )}
+      </ScreenCapture>
     </>
   );
 };
