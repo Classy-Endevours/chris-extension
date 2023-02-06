@@ -86,9 +86,16 @@ const Actions = ({ css, extensionProviders, text }) => {
 
   const openWebsite = (selectedObject: any, type: string) => {
     // window.open(url, "_blank");
+    console.log({
+      selectedObject
+    })
     setExtType({ selectedObject, type });
     handleOpen();
   };
+  console.log({
+    apiResponse,
+    extType,
+  })
   return (
     <>
       <SpeedDial
@@ -172,11 +179,11 @@ const Actions = ({ css, extensionProviders, text }) => {
                       {textLoader ? (
                         <CircularProgress />
                       ) : (
-                        <Typography>
-                          {extType.selectedObject.output.text.isArray
+                        apiResponse && <Typography>
+                          {(extType.selectedObject.output.text.isArray !== "false")
                             ? apiResponse.map(
                                 (item: any) =>
-                                  item[extType.selectedObject.output.text.value]
+                                  <p>{item[extType.selectedObject.output.text.value]}</p>
                               )
                             : apiResponse[
                                 extType.selectedObject.output.text.value
@@ -211,7 +218,7 @@ const Actions = ({ css, extensionProviders, text }) => {
                       {textLoader ? (
                         <CircularProgress />
                       ) : (
-                        <Typography>
+                        (apiResponse && <Typography>
                           {extType.selectedObject.output.image.isArray
                             ? apiResponse.map(
                                 (item: any) =>
@@ -222,7 +229,7 @@ const Actions = ({ css, extensionProviders, text }) => {
                             : apiResponse[
                                 extType.selectedObject.output.image.value
                               ]}
-                        </Typography>
+                        </Typography>)
                       )}
                     </Box>
                   </>
